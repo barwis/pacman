@@ -55,6 +55,23 @@ public class Ghost {
         if (Maze.grid[x-1][y] && direction != Direction.right) {
             movement.add(Direction.left);
         }
+        
+        
+        if (movement.contains(Direction.left) && movement.contains(Direction.right)) {
+            if (Ball.x < x) {
+                movement.remove(Direction.right);
+            } else {
+                movement.remove(Direction.left);
+            }
+        }
+        
+        if (movement.contains(Direction.up) && movement.contains(Direction.down)) {
+            if (Ball.y < y) {
+                movement.remove(Direction.down);
+            } else {
+                movement.remove(Direction.up);
+            }
+        }
 
         // pick random direction from possible directions list
         Random randomGen = new Random();// create a random number generator
