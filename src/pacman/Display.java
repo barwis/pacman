@@ -26,6 +26,9 @@ public class Display extends JPanel implements ActionListener, KeyListener{
     public static int stageHeight = 31;
     public static int blockSize = 30;
     
+    public static int points = 0;
+    private int level = 1;
+    
     private boolean endGame = false;
     Ball ball;
     static Timer time;
@@ -53,9 +56,8 @@ public class Display extends JPanel implements ActionListener, KeyListener{
         this.addKeyListener(this);
         time.start();
 
-        
-        
     }
+    
     @Override
     public void paint(Graphics g){
         maze.paint(g);
@@ -86,6 +88,7 @@ public class Display extends JPanel implements ActionListener, KeyListener{
         
         if (!endGame) {
             ball.update();
+            eat();
         }
     }
     
@@ -99,9 +102,14 @@ public class Display extends JPanel implements ActionListener, KeyListener{
             endGame = true;
             JOptionPane.showMessageDialog(null, "You died!");
         }
-
     }
     
+    private void eat() {
+        if (Food.foodGrid[Ball.x][Ball.y] > 0) {
+            Food.foodGrid[Ball.x][Ball.y] = 0;
+            points += 10;
+        }
+    }
     
     public void keyReleased(KeyEvent e)
     {

@@ -56,6 +56,7 @@ public class Ball {
     public void setColor(Color c){
        color = c;
     }
+    
     public void update(){
         if(mouthAngle == 360)
         {
