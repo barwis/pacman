@@ -115,7 +115,7 @@ public class Display extends JPanel implements ActionListener, KeyListener{
             ball.y = ghost.y;
             time.stop();
             endGame = true;
-//            JOptionPane.showMessageDialog(null, "You died!");
+            JOptionPane.showMessageDialog(null, "You died!");
         }
 
     }
