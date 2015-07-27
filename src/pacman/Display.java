@@ -25,6 +25,8 @@ public class Display extends JPanel implements ActionListener, KeyListener{
     public static int stageWidth = 28;
     public static int stageHeight = 31;
     public static int blockSize = 30;
+    
+    private boolean endGame = false;
     Ball ball;
     static Timer time;
     Maze maze;
@@ -42,7 +44,7 @@ public class Display extends JPanel implements ActionListener, KeyListener{
         ball = new Ball(13,23);
         ghost = new Ghost(13, 11);
 
-        time = new Timer(20, this);
+        time = new Timer(100, this);
         
         maze.fillMaze();
         food.fillFoodMaze();
@@ -75,20 +77,35 @@ public class Display extends JPanel implements ActionListener, KeyListener{
     @Override
     public void actionPerformed(ActionEvent e){
 
+        checkCollision();
+
+        ball.update();
+        
+        checkCollision();
+        
         ghost.update();
+        checkCollision();
+        
         repaint();
 
-        time.stop();
-
-
-        if (ball.x == ghost.x && ball.y == ghost.y) {
+        if (endGame) {
+            ball.x = ghost.x;
+            ball.y = ghost.y;
             JOptionPane.showMessageDialog(null, "You died!");
-            
-        } else {
-            time.start();
-            ball.update(); // tu ustawia nowe wspolrzedne
         }
         
+    }
+    
+    private void checkCollision() {
+        
+        if (ball.x == ghost.x && ball.y == ghost.y) {
+            
+            ball.x = ghost.x;
+            ball.y = ghost.y;
+            time.stop();
+            endGame = true;
+//            JOptionPane.showMessageDialog(null, "You died!");
+        }
 
     }
     
