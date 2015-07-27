@@ -76,7 +76,6 @@ public class Display extends JPanel implements ActionListener, KeyListener{
 
     @Override
     public void actionPerformed(ActionEvent e){
-
         checkCollision();
         
         if (!endGame) {
@@ -88,23 +87,6 @@ public class Display extends JPanel implements ActionListener, KeyListener{
         if (!endGame) {
             ball.update();
         }
-//        checkCollision();
-//
-//        ball.update();
-//        
-//        checkCollision();
-//        
-//        ghost.update();
-//        checkCollision();
-//        
-//        repaint();
-//
-//        if (endGame) {
-//            ball.x = ghost.x;
-//            ball.y = ghost.y;
-//            JOptionPane.showMessageDialog(null, "You died!");
-//        }
-//        
     }
     
     private void checkCollision() {

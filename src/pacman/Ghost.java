@@ -18,6 +18,8 @@ import java.util.Random;
 public class Ghost {
     
     Color color = Color.MAGENTA;
+    public int defaultX;
+    public int defaultY;
     public int x;
     public int y;
     public int ghostSize = Display.blockSize;
@@ -27,10 +29,17 @@ public class Ghost {
     
     
     public Ghost(int _x, int _y){
+        defaultX = _x;
+        defaultY = _y;
         x = _x;
         y = _y;
 
     }
+    public void resetPosition() {
+        x = defaultX;
+        y = defaultY;
+    }
+    
     public void paint(Graphics g){
         
         g.setColor(color);

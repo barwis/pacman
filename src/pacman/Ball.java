@@ -17,6 +17,8 @@ public class Ball {
     Color color = Color.yellow;
     public static int x;
     public static int y;
+    public int defaultX;
+    public int defaultY;
     public int directionAngle = 30;
     public int mouthAngle = 300;
     Direction direction;
@@ -26,8 +28,16 @@ public class Ball {
         
         x = _x;
         y = _y;
+        defaultX = _x;
+        defaultY = _y;
         direction = Direction.right;
     }
+    
+    public void resetPosition() {
+        x = defaultX;
+        y = defaultY;
+    }
+    
     public void paint(Graphics g){
         
         g.setColor(color);
