@@ -7,11 +7,15 @@ package pacman;
 
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
+import javax.imageio.ImageIO;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.Timer;
@@ -47,7 +51,7 @@ public class Display extends JPanel implements ActionListener, KeyListener{
         ball = new Ball(13,23);
         ghost = new Ghost(13, 11);
 
-        time = new Timer(100, this);
+        time = new Timer((100 / level), this);
         
         maze.fillMaze();
         food.fillFoodMaze();
@@ -55,7 +59,27 @@ public class Display extends JPanel implements ActionListener, KeyListener{
         this.setFocusable(true);
         this.addKeyListener(this);
         time.start();
+        
 
+    }
+    
+    public void displayStats(Graphics g) {
+        g.setFont(new Font("Arial", Font.BOLD, 16));
+        g.setColor(Color.WHITE);
+        
+        BufferedImage life = null;
+        
+        try {
+            life = ImageIO.read(Pacman.class.getResource("../images/life.png"));
+        } catch (IOException ex) {
+
+        }
+        
+        g.drawString("Lives:", 30, 300 + 10);
+        for (int i = 0; i < ball.lives; i++) {
+            g.drawImage(life, (90 + i * 20), 295, null);
+        }
+        
     }
     
     @Override
@@ -64,14 +88,19 @@ public class Display extends JPanel implements ActionListener, KeyListener{
         food.paint(g);
         ball.paint(g);
         
-        g.setColor(Color.MAGENTA);
+        g.setColor(Color.RED);
         ghost.paint(g);
+        
+        displayStats(g);
+        
+        
 //        
 //        g.setColor(Color.RED);
 //        ghost1.paint(g);
 
 //        g.setColor(Color.PINK);
 //        ghost2.paint(g);
+        
         
         
     }
@@ -94,13 +123,18 @@ public class Display extends JPanel implements ActionListener, KeyListener{
     
     private void checkCollision() {
         
+        if (endGame) {
+        time.stop();
+
+            JOptionPane.showMessageDialog(null, "You died!");
+        }
+        
         if (ball.x == ghost.x && ball.y == ghost.y) {
             
             ball.x = ghost.x;
             ball.y = ghost.y;
-            time.stop();
             endGame = true;
-            JOptionPane.showMessageDialog(null, "You died!");
+
         }
     }
     

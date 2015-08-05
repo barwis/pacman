@@ -23,6 +23,8 @@ public class Ball {
     public int mouthAngle = 300;
     Direction direction;
     public int superPacman = 0;
+    public int lives = 3;
+    
     
     public Ball(int _x, int _y){
         

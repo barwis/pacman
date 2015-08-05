@@ -38,6 +38,11 @@ public class Ghost {
         y = _y;
 
     }
+    
+    public void setColor(Color c) {
+        color = c;
+    }
+    
     public void resetPosition() {
         x = defaultX;
         y = defaultY;
@@ -46,11 +51,11 @@ public class Ghost {
     public void paint(Graphics g){
         BufferedImage image = null;
         
-        g.setColor(color);
+//        g.setColor(color);
 //        g.drawRect(x * Display.blockSize, y * Display.blockSize, ghostSize, ghostSize);
         g.fillRect(x * Display.blockSize, y * Display.blockSize, ghostSize, ghostSize);
         
-        String ghostURL;
+        String ghostURL = "ghost.png";
      
         
         switch (direction) {
