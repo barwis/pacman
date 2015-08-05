@@ -35,9 +35,9 @@ public class Maze {
                     g.fillRect(i*Display.blockSize, j*Display.blockSize, Display.blockSize , Display.blockSize);       
                 }
                 
-                g.setFont(new Font("Arial", Font.PLAIN, 8));
-                g.setColor(Color.WHITE);
-                g.drawString("[" + i + "," + j + "]", i*Display.blockSize, j*Display.blockSize + 10);
+//                g.setFont(new Font("Arial", Font.PLAIN, 8));
+//                g.setColor(Color.WHITE);
+//                g.drawString("[" + i + "," + j + "]", i*Display.blockSize, j*Display.blockSize + 10);
                 
             }
         }

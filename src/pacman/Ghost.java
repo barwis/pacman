@@ -7,9 +7,12 @@ package pacman;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import javax.imageio.ImageIO;
 
 /**
  *
@@ -41,10 +44,41 @@ public class Ghost {
     }
     
     public void paint(Graphics g){
+        BufferedImage image = null;
         
         g.setColor(color);
 //        g.drawRect(x * Display.blockSize, y * Display.blockSize, ghostSize, ghostSize);
         g.fillRect(x * Display.blockSize, y * Display.blockSize, ghostSize, ghostSize);
+        
+        String ghostURL;
+     
+        
+        switch (direction) {
+            case up: 
+                ghostURL = "ghost_up.png";
+                break;
+            case down:
+                ghostURL = "ghost_down.png";
+                break;
+            case left: 
+                ghostURL = "ghost_left.png";
+                break;
+            case right:
+                ghostURL = "ghost_right.png";
+                break;
+            default:
+                ghostURL = "ghost_left.png";
+                break;
+            
+        }
+        
+        try {
+            image = ImageIO.read(Pacman.class.getResource("../images/" + ghostURL));
+        } catch (IOException ex) {
+            
+        }
+        g.drawImage(image, x * Display.blockSize, y * Display.blockSize, null);
+        
     }
     
     public void  update()
