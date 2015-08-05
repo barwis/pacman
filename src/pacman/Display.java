@@ -34,6 +34,9 @@ public class Display extends JPanel implements ActionListener, KeyListener{
     private int level = 1;
     
     private boolean endGame = false;
+    public static boolean gameRunning = true;
+    
+    
     Ball ball;
     static Timer time;
     Maze maze;
@@ -44,6 +47,9 @@ public class Display extends JPanel implements ActionListener, KeyListener{
     
 //    Ghost ghost1;
 //    Ghost ghost2;
+    
+    
+    
     
     
     public Display(){
@@ -80,10 +86,13 @@ public class Display extends JPanel implements ActionListener, KeyListener{
 
         }
         
-        g.drawString("Lives:", 30, 300 + 10);
+        g.drawString("Lives:", 30, 310);
         for (int i = 0; i < ball.lives; i++) {
             g.drawImage(life, (90 + i * 20), 295, null);
         }
+        
+        g.drawString("Points: " + points, 30, 340);
+        g.drawString("Level: " + level, 30, 370);
         
     }
     
@@ -103,14 +112,6 @@ public class Display extends JPanel implements ActionListener, KeyListener{
         ghosts[2].paint(g);
         
         displayStats(g);
-        
-//        g.setColor(Color.RED);
-//        ghost1.paint(g);
-//
-//        g.setColor(Color.PINK);
-//        ghost2.paint(g);
-        
-        
         
     }
 
@@ -137,8 +138,7 @@ public class Display extends JPanel implements ActionListener, KeyListener{
     private void checkCollision() {
         
         if (endGame) {
-        time.stop();
-
+            time.stop();
             JOptionPane.showMessageDialog(null, "You died!");
         }
         

@@ -40,10 +40,8 @@ public class Ball {
     }
     
     public void paint(Graphics g){
-        
         g.setColor(color);
         g.fillArc(x * Display.blockSize, y * Display.blockSize, Display.blockSize,Display.blockSize, directionAngle, mouthAngle);
-        
     }
     
     public void setDirectionAngle(int a) {
@@ -66,9 +64,13 @@ public class Ball {
         else{
             mouthAngle = 360;
         } 
-      
+        
+        if (!Display.gameRunning) {
+            return;
+        }
+        
         // setting up the movement and collision detection
-        if(direction == Direction.up /*&& Maze.grid[x][y-1]*/)
+        if(direction == Direction.up && Maze.grid[x][y-1])
         {
             y = y - 1;
          
@@ -92,6 +94,7 @@ public class Ball {
 //        if(Food.foodGrid[x][y] == 1){
 // 
 //            Food.foodGrid[x][y] = 0;
+//            Display.points += 10;
 //        }
 //        else if(Food.foodGrid[x][y] == 2){
 //            Food.foodGrid[x][y] = 0;

@@ -90,6 +90,9 @@ public class Ghost {
     
     public void  update()
     {
+        if (!Display.gameRunning) {
+            return;
+        }
         int[] r = new int[2];
         movement.clear();
         
