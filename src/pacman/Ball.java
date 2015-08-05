@@ -25,7 +25,6 @@ public class Ball {
     public int superPacman = 0;
     public int lives = 3;
     
-    
     public Ball(int _x, int _y){
         
         x = _x;
@@ -69,7 +68,7 @@ public class Ball {
         } 
       
         // setting up the movement and collision detection
-        if(direction == Direction.up && Maze.grid[x][y-1])
+        if(direction == Direction.up /*&& Maze.grid[x][y-1]*/)
         {
             y = y - 1;
          

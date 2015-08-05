@@ -51,7 +51,9 @@ public class Ghost {
     public void paint(Graphics g){
         BufferedImage image = null;
         
-//        g.setColor(color);
+        
+        
+        g.setColor(color);
 //        g.drawRect(x * Display.blockSize, y * Display.blockSize, ghostSize, ghostSize);
         g.fillRect(x * Display.blockSize, y * Display.blockSize, ghostSize, ghostSize);
         

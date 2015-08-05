@@ -40,8 +40,10 @@ public class Display extends JPanel implements ActionListener, KeyListener{
     Food food;
     Ghost ghost;
     
-    Ghost ghost1;
-    Ghost ghost2;
+    Ghost[] ghosts = new Ghost[3];
+    
+//    Ghost ghost1;
+//    Ghost ghost2;
     
     
     public Display(){
@@ -49,7 +51,11 @@ public class Display extends JPanel implements ActionListener, KeyListener{
         maze = new Maze();
         food = new Food();
         ball = new Ball(13,23);
-        ghost = new Ghost(13, 11);
+        ghosts[0] = new Ghost(13, 11);
+        ghosts[1] = new Ghost(14, 11);
+        ghosts[2] = new Ghost(15, 11);
+        
+        // create ghosts 
 
         time = new Timer((100 / level), this);
         
@@ -59,7 +65,6 @@ public class Display extends JPanel implements ActionListener, KeyListener{
         this.setFocusable(true);
         this.addKeyListener(this);
         time.start();
-        
 
     }
     
@@ -88,16 +93,20 @@ public class Display extends JPanel implements ActionListener, KeyListener{
         food.paint(g);
         ball.paint(g);
         
-        g.setColor(Color.RED);
-        ghost.paint(g);
+        ghosts[0].setColor(Color.RED);
+        ghosts[0].paint(g);
+        
+        ghosts[1].setColor(Color.GREEN);
+        ghosts[1].paint(g);
+        
+        ghosts[2].setColor(Color.MAGENTA);
+        ghosts[2].paint(g);
         
         displayStats(g);
         
-        
-//        
 //        g.setColor(Color.RED);
 //        ghost1.paint(g);
-
+//
 //        g.setColor(Color.PINK);
 //        ghost2.paint(g);
         
@@ -111,7 +120,11 @@ public class Display extends JPanel implements ActionListener, KeyListener{
         
         if (!endGame) {
             repaint();
-            ghost.update();
+            
+            for (Ghost ghost: ghosts) {
+                ghost.update();
+            }
+            
             checkCollision();
         }
         
@@ -129,13 +142,17 @@ public class Display extends JPanel implements ActionListener, KeyListener{
             JOptionPane.showMessageDialog(null, "You died!");
         }
         
-        if (ball.x == ghost.x && ball.y == ghost.y) {
-            
-            ball.x = ghost.x;
-            ball.y = ghost.y;
-            endGame = true;
+        for (Ghost ghost : ghosts) {
+            if (ball.x == ghost.x && ball.y == ghost.y) {
 
+                ball.x = ghost.x;
+                ball.y = ghost.y;
+                endGame = true;
+                break;
+
+            }
         }
+        
     }
     
     private void eat() {
