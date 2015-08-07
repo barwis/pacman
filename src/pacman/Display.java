@@ -165,7 +165,6 @@ public class Display extends JPanel implements ActionListener, KeyListener{
         if (result == JOptionPane.OK_OPTION) {
             restart();
         }
-        
         if (result == JOptionPane.CANCEL_OPTION) {
             System.exit(0);
         }
@@ -204,7 +203,6 @@ public class Display extends JPanel implements ActionListener, KeyListener{
             time = new Timer((100 / level), this);
             time.start();
         }
-        
     }
     
     public void keyReleased(KeyEvent e)
@@ -230,6 +228,7 @@ public class Display extends JPanel implements ActionListener, KeyListener{
             ball.setDirectionAngle(210);
         }
     }
+    
     public void keyTyped(KeyEvent e)
     {
     }
