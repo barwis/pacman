@@ -37,6 +37,9 @@ public class Ball {
     public void resetPosition() {
         x = defaultX;
         y = defaultY;
+        direction = Direction.right;
+        directionAngle = 30;
+        mouthAngle = 300;
     }
     
     public void paint(Graphics g){

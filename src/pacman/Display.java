@@ -63,7 +63,7 @@ public class Display extends JPanel implements ActionListener, KeyListener{
         
         // create ghosts 
 
-        time = new Timer((100 / level), this);
+        time = new Timer((100 / level*5), this);
         
         maze.fillMaze();
         food.fillFoodMaze();
@@ -94,6 +94,7 @@ public class Display extends JPanel implements ActionListener, KeyListener{
         g.drawString("Points: " + points, 30, 340);
         g.drawString("Level: " + level, 30, 370);
         
+        g.drawString("Remaining food: " + food.getRemainingFood(), 30, 400);
     }
     
     @Override
@@ -138,8 +139,9 @@ public class Display extends JPanel implements ActionListener, KeyListener{
     private void checkCollision() {
         
         if (endGame) {
-            time.stop();
-            JOptionPane.showMessageDialog(null, "You died!");
+//            time.stop();
+//            JOptionPane.showMessageDialog(null, "You died!");
+            ball.lives -= 1;
         }
         
         for (Ghost ghost : ghosts) {
@@ -147,7 +149,8 @@ public class Display extends JPanel implements ActionListener, KeyListener{
 
                 ball.x = ghost.x;
                 ball.y = ghost.y;
-                endGame = true;
+//                endGame = true;
+                death();
                 break;
 
             }
@@ -155,11 +158,56 @@ public class Display extends JPanel implements ActionListener, KeyListener{
         
     }
     
+    private void death() {
+//        endGame = true;
+        gameRunning = false;
+        time.stop();
+        ball.lives -= 1;
+//        JOptionPane.showMessageDialog(null, "You died!");
+        if (ball.lives > 0) {
+             int result = JOptionPane.showConfirmDialog(this,  String.format( "You have %1$s lives left. Do you want to continue?", ball.lives), "You Died", JOptionPane.YES_NO_OPTION);
+             if (result ==  JOptionPane.YES_OPTION) {
+                 ball.resetPosition();
+                 for (Ghost ghost : ghosts) {
+                     ghost.resetPosition();
+                 }
+                 gameRunning = true;
+                 time.start();
+             } else {
+                 endGame();
+             }
+        } else {
+            endGame();
+        }
+    }
+    
+    private void endGame() {
+        JOptionPane.showMessageDialog(null,  String.format("The End \n Your high score is: %1$d", points));
+    }
+    
     private void eat() {
         if (Food.foodGrid[Ball.x][Ball.y] > 0) {
             Food.foodGrid[Ball.x][Ball.y] = 0;
-            points += 10;
+            points += 10 * level;
         }
+        if (food.getRemainingFood() == 0) {
+            gameRunning = false;
+            time.stop();
+            JOptionPane.showMessageDialog(null,  String.format("Level cleared. Click ok to begin level %1$d", level+1));
+//            int input = JOptionPane.showOptionDialog(null, String.format("Level cleared. Click ok to begin level %1$d", level+1), "Stage cleared", JOptionPane.OK_OPTION, JOptionPane.INFORMATION_MESSAGE, null, null, null);
+
+            level++;
+            food.fillFoodMaze();
+            ball.resetPosition();
+            for (Ghost ghost : ghosts) {
+                ghost.resetPosition();
+            }
+            gameRunning = true;
+            time = new Timer((100 / level*5), this);
+            time.start();
+        
+        }
+        
     }
     
     public void keyReleased(KeyEvent e)

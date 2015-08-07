@@ -93,7 +93,6 @@ public class Ghost {
         if (!Display.gameRunning) {
             return;
         }
-        int[] r = new int[2];
         movement.clear();
         
         if (Maze.grid[x][y-1] && direction != Direction.down) {
