@@ -35,7 +35,6 @@ public class Food {
                 } 
             }
         }    
-        
     }
     
     public int getRemainingFood() {

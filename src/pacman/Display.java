@@ -44,13 +44,7 @@ public class Display extends JPanel implements ActionListener, KeyListener{
     Ghost ghost;
     
     Ghost[] ghosts = new Ghost[3];
-    
-//    Ghost ghost1;
-//    Ghost ghost2;
-    
-    
-    
-    
+
     
     public Display(){
         this.setPreferredSize(new Dimension(stageWidth*blockSize, stageHeight*blockSize));
@@ -63,7 +57,7 @@ public class Display extends JPanel implements ActionListener, KeyListener{
         
         // create ghosts 
 
-        time = new Timer((100 / level*5), this);
+        time = new Timer((100 / level), this);
         
         maze.fillMaze();
         food.fillFoodMaze();
@@ -71,7 +65,6 @@ public class Display extends JPanel implements ActionListener, KeyListener{
         this.setFocusable(true);
         this.addKeyListener(this);
         time.start();
-
     }
     
     public void displayStats(Graphics g) {
@@ -113,7 +106,6 @@ public class Display extends JPanel implements ActionListener, KeyListener{
         ghosts[2].paint(g);
         
         displayStats(g);
-        
     }
 
     @Override
@@ -126,7 +118,6 @@ public class Display extends JPanel implements ActionListener, KeyListener{
             for (Ghost ghost: ghosts) {
                 ghost.update();
             }
-            
             checkCollision();
         }
         
@@ -137,52 +128,60 @@ public class Display extends JPanel implements ActionListener, KeyListener{
     }
     
     private void checkCollision() {
-        
-        if (endGame) {
-//            time.stop();
-//            JOptionPane.showMessageDialog(null, "You died!");
-            ball.lives -= 1;
-        }
-        
+
         for (Ghost ghost : ghosts) {
             if (ball.x == ghost.x && ball.y == ghost.y) {
-
                 ball.x = ghost.x;
                 ball.y = ghost.y;
-//                endGame = true;
+
                 death();
                 break;
-
             }
         }
-        
     }
     
     private void death() {
-//        endGame = true;
-        gameRunning = false;
         time.stop();
+        gameRunning = false;
         ball.lives -= 1;
-//        JOptionPane.showMessageDialog(null, "You died!");
+        
         if (ball.lives > 0) {
-             int result = JOptionPane.showConfirmDialog(this,  String.format( "You have %1$s lives left. Do you want to continue?", ball.lives), "You Died", JOptionPane.YES_NO_OPTION);
-             if (result ==  JOptionPane.YES_OPTION) {
-                 ball.resetPosition();
-                 for (Ghost ghost : ghosts) {
-                     ghost.resetPosition();
-                 }
-                 gameRunning = true;
-                 time.start();
-             } else {
-                 endGame();
-             }
+            JOptionPane.showMessageDialog(null,  String.format("You died. You have %1$d lives left", ball.lives));
+            ball.resetPosition();
+            for (Ghost ghost : ghosts) {
+                ghost.resetPosition();
+            }
+            gameRunning = true;
+            time.start();
         } else {
             endGame();
         }
     }
     
     private void endGame() {
-        JOptionPane.showMessageDialog(null,  String.format("The End \n Your high score is: %1$d", points));
+        time.stop();
+        gameRunning = false;
+        int result = JOptionPane.showOptionDialog(null,  String.format("The End \n Your high score is: %1$d \n Click OK to play again", points), "Game Over", JOptionPane.OK_CANCEL_OPTION, JOptionPane.INFORMATION_MESSAGE, null, null, null );
+        if (result == JOptionPane.OK_OPTION) {
+            restart();
+        }
+        
+        if (result == JOptionPane.CANCEL_OPTION) {
+            System.exit(0);
+        }
+    }
+    
+    private void restart() {
+        points = 0;
+        ball.lives = 3;
+        level = 1;
+        ball.resetPosition();
+        for (Ghost ghost : ghosts) {
+            ghost.resetPosition();
+        }
+        time = new Timer((100 / level), this);
+        gameRunning = true;
+        time.start();
     }
     
     private void eat() {
@@ -194,7 +193,6 @@ public class Display extends JPanel implements ActionListener, KeyListener{
             gameRunning = false;
             time.stop();
             JOptionPane.showMessageDialog(null,  String.format("Level cleared. Click ok to begin level %1$d", level+1));
-//            int input = JOptionPane.showOptionDialog(null, String.format("Level cleared. Click ok to begin level %1$d", level+1), "Stage cleared", JOptionPane.OK_OPTION, JOptionPane.INFORMATION_MESSAGE, null, null, null);
 
             level++;
             food.fillFoodMaze();
@@ -203,17 +201,16 @@ public class Display extends JPanel implements ActionListener, KeyListener{
                 ghost.resetPosition();
             }
             gameRunning = true;
-            time = new Timer((100 / level*5), this);
+            time = new Timer((100 / level), this);
             time.start();
-        
         }
         
     }
     
     public void keyReleased(KeyEvent e)
     {
-        
     }
+    
     public void keyPressed(KeyEvent e)
     {
         if (e.getKeyCode() == KeyEvent.VK_UP) {
@@ -235,6 +232,5 @@ public class Display extends JPanel implements ActionListener, KeyListener{
     }
     public void keyTyped(KeyEvent e)
     {
-        
     }
 }

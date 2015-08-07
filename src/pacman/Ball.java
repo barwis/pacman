@@ -26,7 +26,6 @@ public class Ball {
     public int lives = 3;
     
     public Ball(int _x, int _y){
-        
         x = _x;
         y = _y;
         defaultX = _x;
@@ -50,11 +49,13 @@ public class Ball {
     public void setDirectionAngle(int a) {
         directionAngle = a;
     }
+    
     public void setDirection(Direction d){
         if ( direction != d) {
             direction = d;
         }
     }
+    
     public void setColor(Color c){
        color = c;
     }
@@ -76,18 +77,15 @@ public class Ball {
         if(direction == Direction.up && Maze.grid[x][y-1])
         {
             y = y - 1;
-         
         }
         else if(direction == Direction.down && Maze.grid[x][y+1])
         {
             y = y + 1;
-
-            
         }
+        
         else if(direction == Direction.right && Maze.grid[x+1][y])
         {
             x = x + 1; 
-            
         }
         else if(direction == Direction.left && Maze.grid[x-1][y])
         {
@@ -110,7 +108,6 @@ public class Ball {
 //        else {
 //           setColor(Color.YELLOW);
 //        }
-
     }
 
     

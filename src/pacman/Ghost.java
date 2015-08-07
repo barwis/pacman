@@ -30,13 +30,11 @@ public class Ghost {
     
     private List<Direction> movement = new ArrayList<Direction>();
     
-    
     public Ghost(int _x, int _y){
         defaultX = _x;
         defaultY = _y;
         x = _x;
         y = _y;
-
     }
     
     public void setColor(Color c) {
@@ -51,15 +49,11 @@ public class Ghost {
     public void paint(Graphics g){
         BufferedImage image = null;
         
-        
-        
         g.setColor(color);
-//        g.drawRect(x * Display.blockSize, y * Display.blockSize, ghostSize, ghostSize);
         g.fillRect(x * Display.blockSize, y * Display.blockSize, ghostSize, ghostSize);
         
         String ghostURL = "ghost.png";
      
-        
         switch (direction) {
             case up: 
                 ghostURL = "ghost_up.png";
@@ -76,16 +70,14 @@ public class Ghost {
             default:
                 ghostURL = "ghost_left.png";
                 break;
-            
         }
         
         try {
             image = ImageIO.read(Pacman.class.getResource("../images/" + ghostURL));
         } catch (IOException ex) {
-            
         }
-        g.drawImage(image, x * Display.blockSize, y * Display.blockSize, null);
         
+        g.drawImage(image, x * Display.blockSize, y * Display.blockSize, null);
     }
     
     public void  update()
@@ -93,6 +85,7 @@ public class Ghost {
         if (!Display.gameRunning) {
             return;
         }
+        
         movement.clear();
         
         if (Maze.grid[x][y-1] && direction != Direction.down) {
@@ -141,7 +134,5 @@ public class Ghost {
         } else if (direction == Direction.left) {
             x = x - 1;
         }
-
     }    
-    
 }
