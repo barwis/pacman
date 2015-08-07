@@ -39,6 +39,7 @@ public class Display extends JPanel implements ActionListener, KeyListener{
     
     Ball ball;
     static Timer time;
+    private int timerBase = 200;
     Maze maze;
     Food food;
     Ghost ghost;
@@ -57,14 +58,19 @@ public class Display extends JPanel implements ActionListener, KeyListener{
         
         // create ghosts 
 
-        time = new Timer((100 / level), this);
-        
+//        time = new Timer((100 / level), this);
+        setTimerSpeed(); 
+       
         maze.fillMaze();
         food.fillFoodMaze();
         
         this.setFocusable(true);
         this.addKeyListener(this);
         time.start();
+    }
+    
+    private void setTimerSpeed() {
+        time = new Timer(( timerBase / level), this);
     }
     
     public void displayStats(Graphics g) {
@@ -87,7 +93,7 @@ public class Display extends JPanel implements ActionListener, KeyListener{
         g.drawString("Points: " + points, 30, 340);
         g.drawString("Level: " + level, 30, 370);
         
-        g.drawString("Remaining food: " + food.getRemainingFood(), 30, 400);
+        g.drawString("Food left: " + food.getRemainingFood(), 30, 400);
     }
     
     @Override
@@ -178,7 +184,10 @@ public class Display extends JPanel implements ActionListener, KeyListener{
         for (Ghost ghost : ghosts) {
             ghost.resetPosition();
         }
-        time = new Timer((100 / level), this);
+        
+        setTimerSpeed();
+        
+
         gameRunning = true;
         time.start();
     }
@@ -200,7 +209,9 @@ public class Display extends JPanel implements ActionListener, KeyListener{
                 ghost.resetPosition();
             }
             gameRunning = true;
-            time = new Timer((100 / level), this);
+//            time = new Timer((100 / level), this);
+            setTimerSpeed();
+            
             time.start();
         }
     }
