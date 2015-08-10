@@ -148,7 +148,6 @@ public class Display extends JPanel implements ActionListener, KeyListener{
             }
         }
         time.start();
-
     }
     
     private void death() {

@@ -45,8 +45,7 @@ public class Ball {
         if (superPacman > 0 ) {
             g.setColor(Color.GREEN);
         } else {
-                    g.setColor(color);
-
+            g.setColor(color);
         }
         g.fillArc(x * Display.blockSize, y * Display.blockSize, Display.blockSize,Display.blockSize, directionAngle, mouthAngle);
     }

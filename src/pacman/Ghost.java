@@ -61,9 +61,7 @@ public class Ghost {
         } else {
             g.setColor(color);
         }
-        if (!randomMovement) {
-            g.setColor(Color.YELLOW);
-        }
+
         g.fillRect(x * Display.blockSize, y * Display.blockSize, ghostSize, ghostSize);
         
         String ghostURL = "ghost.png";
@@ -98,23 +96,19 @@ public class Ghost {
         g.drawImage(image, x * Display.blockSize, y * Display.blockSize, null);
     }
     
-    private void pathFind(int destX, int destY, boolean canTurnAround) {
+    private void pathFind(int destX, int destY) {
         List<Direction> possibleDirections = new ArrayList<Direction>();
         
         if (Maze.grid[x][y - 1] && direction != Direction.down) {
-//            if ( canTurnAround || direction != Direction.down)
                 possibleDirections.add(Direction.up);
         }
         if (Maze.grid[x][y + 1] && direction != Direction.up) {
-//            if (canTurnAround || direction != Direction.up)
                 possibleDirections.add(Direction.down);
         }
         if (Maze.grid[x + 1][y] && direction != Direction.left) {
-//            if (canTurnAround || direction != Direction.left)
             possibleDirections.add(Direction.right);
         }
         if (Maze.grid[x - 1][y] && direction != Direction.right) {
-//            if (canTurnAround || direction != Direction.right)
                 possibleDirections.add(Direction.left);
         }
         
@@ -138,15 +132,6 @@ public class Ghost {
         if (!randomMovement && possibleDirections.contains(Direction.up)) {
             direction = Direction.up;
         } else {
-            
-            if (destX == x) {
-                
-            }
-            if (destY == y) {
-            
-                
-            } 
-            
 
             Random randomGen = new Random();// create a random number generator
 
@@ -169,55 +154,12 @@ public class Ghost {
             randomMovement = true;
 
         }
-//        if ( (11 < x < 16) && (11 < y < 15) ) {
-//        
-//        }
-//        
+
         if (isDead > 0) {
-            pathFind(defaultX, defaultY, false);
+            pathFind(defaultX, defaultY);
         } else {
-            pathFind(Ball.x, Ball.y, false);
+            pathFind(Ball.x, Ball.y);
         }
-//        if (Maze.grid[x][y-1] && direction != Direction.down) {
-//            movement.add(Direction.up);
-//        }
-//        if (Maze.grid[x][y+1] && direction != Direction.up) {
-//            movement.add(Direction.down);
-//        }
-//        if (Maze.grid[x+1][y] && direction != Direction.left) {
-//            movement.add(Direction.right);
-//        }
-//        if (Maze.grid[x-1][y] && direction != Direction.right) {
-//            movement.add(Direction.left);
-//        }
-//        
-//        if (movement.contains(Direction.left) && movement.contains(Direction.right) && randomMovement) {
-//            if (Ball.x < x) {
-//                movement.remove(Direction.right);
-//            } else {
-//                movement.remove(Direction.left);
-//            }
-//        }
-//        
-//        if (movement.contains(Direction.up) && movement.contains(Direction.down) && randomMovement) {
-//            if (Ball.y < y) {
-//                movement.remove(Direction.down);
-//            } else {
-//                movement.remove(Direction.up);
-//            }
-//        }
-        
-        
-//
-//        if (!randomMovement && movement.contains(Direction.up)) {
-//            direction = Direction.up;
-//        } else {
-//        
-//            Random randomGen = new Random();// create a random number generator
-//
-//            int theRandomNumber = randomGen.nextInt(movement.size());// generate a random number, between 0 and n-1 (0,1,2 in this case)
-//            direction = movement.get(theRandomNumber);
-//        }
         
         // setting up the movement and collision detection
         if (direction == Direction.up) {
