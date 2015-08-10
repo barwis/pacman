@@ -116,6 +116,9 @@ public class Food {
                     foodGrid[i][j]= 0;
                 }
             }
+            
+            foodGrid[6][25] = 2;
+            
             for (int i = 1; i <= 2; i++ ){
                 for(int j = 24; j <= 25; j++){
                     foodGrid[i][j]= 0;

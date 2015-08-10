@@ -35,30 +35,26 @@ public class Display extends JPanel implements ActionListener, KeyListener{
     
     private boolean endGame = false;
     public static boolean gameRunning = true;
-    
-    
-    Ball ball;
+        
     static Timer time;
     private int timerBase = 200;
-    Maze maze;
+    
+    Ball ball;
+        Maze maze;
     Food food;
-    Ghost ghost;
     
     Ghost[] ghosts = new Ghost[3];
 
     
-    public Display(){
+        public Display(){
         this.setPreferredSize(new Dimension(stageWidth*blockSize, stageHeight*blockSize));
         maze = new Maze();
         food = new Food();
         ball = new Ball(13,23);
-        ghosts[0] = new Ghost(13, 11);
-        ghosts[1] = new Ghost(14, 11);
-        ghosts[2] = new Ghost(15, 11);
-        
-        // create ghosts 
+        ghosts[0] = new Ghost(11, 14);
+        ghosts[1] = new Ghost(13, 14);
+        ghosts[2] = new Ghost(16, 14);
 
-//        time = new Timer((100 / level), this);
         setTimerSpeed(); 
        
         maze.fillMaze();
@@ -131,19 +127,28 @@ public class Display extends JPanel implements ActionListener, KeyListener{
             ball.update();
             eat();
         }
+        if (Ball.superPacman > 0) {
+            Ball.superPacman--;
+        }
     }
     
     private void checkCollision() {
-
+        time.stop();
         for (Ghost ghost : ghosts) {
             if (ball.x == ghost.x && ball.y == ghost.y) {
                 ball.x = ghost.x;
                 ball.y = ghost.y;
-
-                death();
-                break;
+                if (Ball.superPacman > 0) {
+                    points += (level * 200);
+                    ghost.isDead = 30;
+                } else {
+                    death();
+                    break;
+                }
             }
         }
+        time.start();
+
     }
     
     private void death() {
@@ -194,6 +199,9 @@ public class Display extends JPanel implements ActionListener, KeyListener{
     
     private void eat() {
         if (Food.foodGrid[Ball.x][Ball.y] > 0) {
+            if (Food.foodGrid[Ball.x][Ball.y] > 1 ) {
+                Ball.superPacman = 30;
+            }
             Food.foodGrid[Ball.x][Ball.y] = 0;
             points += 10 * level;
         }

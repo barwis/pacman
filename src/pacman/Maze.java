@@ -273,9 +273,30 @@ public class Maze {
             grid[17][j]= false;
         }
         
-        
+        grid[11][13] = false;
+        grid[15][14] = true;
+        grid[16][14] = false;
+        grid[11][15] = false;
+        grid[12][15] = false;
+        grid[13][15] = false;
+        grid[14][15] = false;
+        grid[11][14] = false;
+        grid[15][13] = true;
         grid[13][12] = false;
-        grid[14][12] = false;
+        
+//        for ( int i = 11; i < 17; i++) {
+//            for (int j = 13; j < 16; j++) {
+//                grid[i][j] = true;
+//            }
+//        }
+//        for (int i = 15; i < 17; i++) {
+//            for (int j = 13; j < 16; j++) {
+//                grid[i][j] = true;
+//            }
+//        }
+//        
+//        grid[13][12] = false;
+//        grid[14][12] = false;
 
 //        for( int i = 0; i <=5; i++){
 //            grid[i][14]= true;

@@ -22,7 +22,7 @@ public class Ball {
     public int directionAngle = 30;
     public int mouthAngle = 300;
     Direction direction;
-    public int superPacman = 0;
+    public static int superPacman = 0;
     public int lives = 3;
     
     public Ball(int _x, int _y){
@@ -42,7 +42,12 @@ public class Ball {
     }
     
     public void paint(Graphics g){
-        g.setColor(color);
+        if (superPacman > 0 ) {
+            g.setColor(Color.GREEN);
+        } else {
+                    g.setColor(color);
+
+        }
         g.fillArc(x * Display.blockSize, y * Display.blockSize, Display.blockSize,Display.blockSize, directionAngle, mouthAngle);
     }
     
