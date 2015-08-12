@@ -14,11 +14,16 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.image.BufferedImage;
+import java.io.File;
 import java.io.IOException;
 import javax.imageio.ImageIO;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.Timer;
+import javax.sound.sampled.*;
+import java.io.*;
 
 /**
  *
@@ -44,6 +49,7 @@ public class Display extends JPanel implements ActionListener, KeyListener{
     Food food;
     
     Ghost[] ghosts = new Ghost[3];
+    public static Clip clip;
 
     
         public Display(){
@@ -62,11 +68,33 @@ public class Display extends JPanel implements ActionListener, KeyListener{
         
         this.setFocusable(true);
         this.addKeyListener(this);
+        play(Pacman.class.getResource("../sounds/pacman_chomp.wav").getPath(), true);
+
         time.start();
     }
     
     private void setTimerSpeed() {
         time = new Timer(( timerBase / level), this);
+    }
+    
+    public static void play(String filename, boolean infinite)
+    {
+        try
+        {
+            clip = AudioSystem.getClip();
+            clip.open(AudioSystem.getAudioInputStream(new File(filename)));
+            if (infinite) {
+                clip.loop(clip.LOOP_CONTINUOUSLY);
+            } else {
+                clip.start();
+            }
+                 
+ 
+        }
+        catch (Exception exc)
+        {
+            exc.printStackTrace(System.out);
+        }
     }
     
     public void displayStats(Graphics g) {
@@ -112,6 +140,7 @@ public class Display extends JPanel implements ActionListener, KeyListener{
 
     @Override
     public void actionPerformed(ActionEvent e){
+        
         checkCollision();
         
         if (!endGame) {
@@ -141,6 +170,7 @@ public class Display extends JPanel implements ActionListener, KeyListener{
                 if (Ball.superPacman > 0) {
                     points += (level * 200);
                     ghost.isDead = 30;
+                    play(Pacman.class.getResource("../sounds/pacman_eatghost.wav").getPath(), false);
                 } else {
                     death();
                     break;
@@ -151,18 +181,23 @@ public class Display extends JPanel implements ActionListener, KeyListener{
     }
     
     private void death() {
-        time.stop();
+
         gameRunning = false;
         ball.lives -= 1;
+        clip.stop();
+        play(Pacman.class.getResource("../sounds/pacman_death.wav").getPath(), false);
+        time.stop();
         
         if (ball.lives > 0) {
-            JOptionPane.showMessageDialog(null,  String.format("You died. You have %1$d lives left", ball.lives));
+            JOptionPane.showMessageDialog(this,  String.format("You died. You have %1$d lives left", ball.lives));
             ball.resetPosition();
             for (Ghost ghost : ghosts) {
                 ghost.resetPosition();
             }
             gameRunning = true;
             time.start();
+            clip.stop();
+            play(Pacman.class.getResource("../sounds/pacman_chomp.wav").getPath(), true);
         } else {
             endGame();
         }
@@ -171,9 +206,11 @@ public class Display extends JPanel implements ActionListener, KeyListener{
     private void endGame() {
         time.stop();
         gameRunning = false;
-        int result = JOptionPane.showOptionDialog(null,  String.format("The End \n Your high score is: %1$d \n Click OK to play again", points), "Game Over", JOptionPane.OK_CANCEL_OPTION, JOptionPane.INFORMATION_MESSAGE, null, null, null );
+        int result = JOptionPane.showOptionDialog(this,  String.format("The End \n Your high score is: %1$d \n Click OK to play again", points), "Game Over", JOptionPane.OK_CANCEL_OPTION, JOptionPane.INFORMATION_MESSAGE, null, null, null );
         if (result == JOptionPane.OK_OPTION) {
             restart();
+            clip.stop();
+            play(Pacman.class.getResource("../sounds/pacman_chomp.wav").getPath(), true);
         }
         if (result == JOptionPane.CANCEL_OPTION) {
             System.exit(0);
@@ -181,6 +218,7 @@ public class Display extends JPanel implements ActionListener, KeyListener{
     }
     
     private void restart() {
+
         points = 0;
         ball.lives = 3;
         level = 1;
@@ -207,7 +245,7 @@ public class Display extends JPanel implements ActionListener, KeyListener{
         if (food.getRemainingFood() == 0) {
             gameRunning = false;
             time.stop();
-            JOptionPane.showMessageDialog(null,  String.format("Level cleared. Click ok to begin level %1$d", level+1));
+            JOptionPane.showMessageDialog(this,  String.format("Level cleared. Click ok to begin level %1$d", level+1));
 
             level++;
             food.fillFoodMaze();
