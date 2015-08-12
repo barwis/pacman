@@ -47,7 +47,12 @@ public class Ball {
         } else {
             g.setColor(color);
         }
-        g.fillArc(x * Display.blockSize, y * Display.blockSize, Display.blockSize,Display.blockSize, directionAngle, mouthAngle);
+        g.fillArc(
+                x * Display.blockSize, 
+                y * Display.blockSize, 
+                Display.blockSize,Display.blockSize, 
+                directionAngle, mouthAngle
+        );
     }
     
     public void setDirectionAngle(int a) {
@@ -95,23 +100,6 @@ public class Ball {
         {
             x = x - 1;                
         }
-//        
-//        if(Food.foodGrid[x][y] == 1){
-// 
-//            Food.foodGrid[x][y] = 0;
-//            Display.points += 10;
-//        }
-//        else if(Food.foodGrid[x][y] == 2){
-//            Food.foodGrid[x][y] = 0;
-//            setColor(Color.GREEN);
-//            superPacman = 30;
-//        }
-//        if(superPacman > 0){
-//            superPacman--; 
-//        }
-//        else {
-//           setColor(Color.YELLOW);
-//        }
     }
 
     

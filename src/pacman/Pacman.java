@@ -8,8 +8,6 @@ package pacman;
 import java.util.TimerTask;
 import javax.swing.JFrame;
 
-
-
 /**
  *
  * @author Aleksandra
@@ -17,7 +15,6 @@ import javax.swing.JFrame;
 enum Direction{
     up,right,down,left 
 }
-
 
 public class Pacman extends JFrame{
     
@@ -31,11 +28,9 @@ public class Pacman extends JFrame{
        pack(); // to make the display fit in the window
     
     }
-
     
     public static void main(String[] args) {
         new Pacman();
     }
-    
 }
 

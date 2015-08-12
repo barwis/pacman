@@ -35,10 +35,6 @@ public class Maze {
                     g.fillRect(i*Display.blockSize, j*Display.blockSize, Display.blockSize , Display.blockSize);       
                 }
                 
-//                g.setFont(new Font("Arial", Font.PLAIN, 8));
-//                g.setColor(Color.WHITE);
-//                g.drawString("[" + i + "," + j + "]", i*Display.blockSize, j*Display.blockSize + 10);
-                
             }
         }
 
@@ -47,12 +43,11 @@ public class Maze {
     
     public void fillMaze(){
 
-        for(int i = 0; i < grid.length; i++ ) //feeling the array
+        for(int i = 0; i < grid.length; i++ ) // filling the array
         {
             for(int j = 0; j < grid[0].length; j++)
             {
                 grid [i][j] = true;
-                  
             }
         }
         
@@ -283,27 +278,7 @@ public class Maze {
         grid[11][14] = false;
         grid[15][13] = true;
         grid[13][12] = false;
-        
-//        for ( int i = 11; i < 17; i++) {
-//            for (int j = 13; j < 16; j++) {
-//                grid[i][j] = true;
-//            }
-//        }
-//        for (int i = 15; i < 17; i++) {
-//            for (int j = 13; j < 16; j++) {
-//                grid[i][j] = true;
-//            }
-//        }
-//        
-//        grid[13][12] = false;
-//        grid[14][12] = false;
-
-//        for( int i = 0; i <=5; i++){
-//            grid[i][14]= true;
-//        }
-//        for( int i = 22; i <= 27; i++){
-//            grid[i][14]= true;
-//        }        
+       
     }
 }
 

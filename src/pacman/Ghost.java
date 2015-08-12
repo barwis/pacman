@@ -30,7 +30,6 @@ public class Ghost {
     Direction direction = Direction.up;
     
     private boolean randomMovement = false;
-    private List<Direction> movement = new ArrayList<Direction>();
     public int isDead = 0;
     
     
@@ -138,8 +137,6 @@ public class Ghost {
             int theRandomNumber = randomGen.nextInt(possibleDirections.size());// generate a random number, between 0 and n-1 (0,1,2 in this case)
             direction = possibleDirections.get(theRandomNumber);
         }
-        
-
     }
     
     public void  update()
@@ -148,11 +145,9 @@ public class Ghost {
             return;
         }
         
-        movement.clear();
         
         if ( ( y < 12 || y > 15) && !randomMovement) {
             randomMovement = true;
-
         }
 
         if (isDead > 0) {

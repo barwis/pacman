@@ -52,8 +52,7 @@ public class Food {
     public void fillFoodMaze()
     { 
         
-//        foodGrid[18][26] = 1;
-        for(int i = 0; i < foodGrid.length; i++ ) //feeling thr array
+        for(int i = 0; i < foodGrid.length; i++ ) //filling thr array
         {
             for(int j = 0; j < foodGrid[0].length; j++)
             {
