@@ -1,2 +1,0 @@
-pacman.Direction
-pacman.Pacman

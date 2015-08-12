@@ -24,6 +24,7 @@ import javax.swing.JPanel;
 import javax.swing.Timer;
 import javax.sound.sampled.*;
 import java.io.*;
+import java.net.URI;
 
 /**
  *
@@ -81,8 +82,9 @@ public class Display extends JPanel implements ActionListener, KeyListener{
     {
         try
         {
+            URI uri = URI.create(filename);
             clip = AudioSystem.getClip();
-            clip.open(AudioSystem.getAudioInputStream(new File(filename)));
+            clip.open(AudioSystem.getAudioInputStream(new File(uri.getPath())));
             if (infinite) {
                 clip.loop(clip.LOOP_CONTINUOUSLY);
             } else {
