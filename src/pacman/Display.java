@@ -90,8 +90,6 @@ public class Display extends JPanel implements ActionListener, KeyListener{
             } else {
                 clip.start();
             }
-                 
- 
         }
         catch (Exception exc)
         {
@@ -187,6 +185,7 @@ public class Display extends JPanel implements ActionListener, KeyListener{
         gameRunning = false;
         ball.lives -= 1;
         clip.stop();
+
         play(Pacman.class.getResource("../sounds/pacman_death.wav").getPath(), false);
         time.stop();
         
@@ -224,13 +223,13 @@ public class Display extends JPanel implements ActionListener, KeyListener{
         points = 0;
         ball.lives = 3;
         level = 1;
+        food.fillFoodMaze();
+        repaint();
         ball.resetPosition();
         for (Ghost ghost : ghosts) {
             ghost.resetPosition();
         }
-        
         setTimerSpeed();
-        
 
         gameRunning = true;
         time.start();
@@ -256,7 +255,6 @@ public class Display extends JPanel implements ActionListener, KeyListener{
                 ghost.resetPosition();
             }
             gameRunning = true;
-//            time = new Timer((100 / level), this);
             setTimerSpeed();
             
             time.start();
